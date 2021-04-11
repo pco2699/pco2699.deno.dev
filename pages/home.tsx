@@ -37,15 +37,7 @@ export default async function homePage(request) {
     const now = getNowInJst();
     const endOfMonth = getEndOfMonth();
     const diff = difference(endOfMonth, now, { units: ["days"]});
-    return diff.days ? diff.days : 0;
-  }
-
-  
-  function calcTillEndOfMonthInWeeks(): number {
-    const now = getNowInJst();
-    const endOfMonth = getEndOfMonth();
-    const diff = difference(endOfMonth, now, { units: ["weeks"]});
-    return diff.days ? diff.days : 0;
+    return diff.days ? diff.days + 1 : 0;
   }
 
   function calcTillEndOfYear(): number {
@@ -56,7 +48,7 @@ export default async function homePage(request) {
   }
 
   function printWeeksDays(days: number): string {
-    const weeks = days / 7;
+    const weeks = Math.floor(days / 7);
     const remainDays = days % 7;
     return weeks.toString() + '週間と' + remainDays.toString() + '日';
   }
