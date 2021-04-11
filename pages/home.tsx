@@ -34,7 +34,7 @@ export default async function homePage(request) {
   return (
     <Layout>
       <div className="container mx-auto max-w-screen-md p-4">
-          { diff.minutes ? printSec(diff.minutes) : "" }
+          { diff.minutes ? printSec(diff.seconds) : "" }
       </div>
     </Layout>);
 }
