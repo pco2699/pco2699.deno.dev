@@ -1,5 +1,5 @@
 import { h } from "https://deno.land/x/sift@0.1.6/mod.ts";
-import dayjs from "https://deno.land/x/dayjs@1.10.4"
+import dayjs from "https://deno.land/x/dayjs@v1.10.4"
 import Layout from "../components/layout.jsx";
 
 export default async function homePage(request) {
