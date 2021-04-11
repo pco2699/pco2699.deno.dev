@@ -5,13 +5,16 @@ import { difference } from "https://deno.land/std@0.92.0/datetime/mod.ts";
 
 export default async function homePage(request) {
   const date0 = new Date();
+  const utcHours = date0.getUTCHours();
+  date0.setHours(utcHours + 9)
+
   const date1 = new Date();
   date1.setHours(23);
   date1.setMinutes(59);
   date1.setSeconds(59);
   
   
-  const diff = difference(date1, date0, { units: ["minutes"] });
+  const diff = difference(date1, date0, { units: ["seconds"] });
   
   function printSec(sec_num: number): string {
       const hours   = Math.floor(sec_num / 3600);
