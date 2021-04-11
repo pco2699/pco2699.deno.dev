@@ -74,7 +74,7 @@ export default async function homePage(request) {
       <div className="container mx-auto max-w-screen-md p-4">
         <div>今日の終わりまで: { printHoursMinutesSeconds(calcTillEndOfDay()) }</div>
         <div>今月の終わりまで: { calcTillEndOfMonthInDays() }日 or {printWeeksDays(calcTillEndOfMonthInDays())}</div>
-        <div>今年の終わりまで: { calcTillEndOfYear() }月と{ calcTillEndOfMonthInDays() }日</div>
+        <div>今年の終わりまで: { calcTillEndOfYear() }ヵ月と{ calcTillEndOfMonthInDays() }日</div>
       </div>
     </Layout>);
 }
