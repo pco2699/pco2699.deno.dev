@@ -7,7 +7,7 @@ export default async function homePage(request) {
   return (
   <Layout>
     <div className="container mx-auto max-w-screen-md p-4">
-        {dayjs()}
+        {dayjs().format()}
     </div>
   </Layout>);
 }
