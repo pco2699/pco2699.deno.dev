@@ -4,19 +4,65 @@ import { difference } from "https://deno.land/std@0.92.0/datetime/mod.ts";
 
 
 export default async function homePage(request) {
-  const date0 = new Date();
-  const utcHours = date0.getUTCHours();
-  date0.setHours(utcHours + 9)
+  function getNowInJst(): Date {
+    const now = new Date();
+    now.setHours(now.getUTCHours() + 9);
+    return now;
+  }
 
-  const date1 = new Date();
-  date1.setHours(23);
-  date1.setMinutes(59);
-  date1.setSeconds(59);
+  function getEndOfDay(): Date {
+    const today = getNowInJst();
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+  }
+
+  function getEndOfMonth(): Date {
+    const today = getNowInJst();
+    return new Date(today.getFullYear(), today.getMonth() + 1, 0); 
+  }
+
+  function getEndOfYear(): Date {
+    const today = getNowInJst();
+    return new Date(today.getFullYear(), 12, 31, 23, 59, 59); 
+  }
+
+  function calcTillEndOfDay(): number {
+    const now = getNowInJst();
+    const endOfDay = getEndOfDay();
+    
+    const diff = difference(endOfDay, now, { units: ["seconds"] });
+    return diff.seconds ? diff.seconds : 0;
+  }
+
+  function calcTillEndOfMonthInDays(): number {
+    const now = getNowInJst();
+    const endOfMonth = getEndOfMonth();
+    const diff = difference(endOfMonth, now, { units: ["days"]});
+    return diff.days ? diff.days : 0;
+  }
+
   
+  function calcTillEndOfMonthInWeeks(): number {
+    const now = getNowInJst();
+    const endOfMonth = getEndOfMonth();
+    const diff = difference(endOfMonth, now, { units: ["weeks"]});
+    return diff.days ? diff.days : 0;
+  }
+
+  function calcTillEndOfYear(): number {
+    const now = getNowInJst();
+    const endOfYear = getEndOfYear();
+    const diff = difference(endOfYear, now, { units: ["months"]});
+    return diff.months ? diff.months : 0;
+  }
+
+  function printWeeksDays(days: number): string {
+    const weeks = days / 7;
+    const remainDays = days % 7;
+    return weeks.toString() + '週間と' + remainDays.toString() + '日';
+  }
+
   
-  const diff = difference(date1, date0, { units: ["seconds"] });
-  
-  function printSec(sec_num: number): string {
+  function printHoursMinutesSeconds(sec_num: number): string {
       const hours   = Math.floor(sec_num / 3600);
       const minutes = Math.floor((sec_num - (hours * 3600)) / 60);
       const seconds = sec_num - (hours * 3600) - (minutes * 60);
@@ -34,7 +80,9 @@ export default async function homePage(request) {
   return (
     <Layout>
       <div className="container mx-auto max-w-screen-md p-4">
-          { diff.seconds ? printSec(diff.seconds) : "" }
+        <div>今日の終わりまで: { printHoursMinutesSeconds(calcTillEndOfDay()) }</div>
+        <div>今月の終わりまで: { calcTillEndOfMonthInDays() }日 or {printWeeksDays(calcTillEndOfMonthInDays())}</div>
+        <div>今年の終わりまで: { calcTillEndOfYear() }月と{ calcTillEndOfMonthInDays() }日</div>
       </div>
     </Layout>);
 }
