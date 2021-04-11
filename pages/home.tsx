@@ -11,7 +11,7 @@ export default async function homePage(request) {
   date1.setSeconds(59);
   
   
-  const diff = difference(date0, date1, { units: ["minutes"] });
+  const diff = difference(date1, date0, { units: ["minutes"] });
   
   function printSec(sec_num: number): string {
       const hours   = Math.floor(sec_num / 3600);
